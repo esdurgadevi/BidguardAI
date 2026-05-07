@@ -24,6 +24,14 @@ const Tender = sequelize.define('Tender', {
     type: DataTypes.STRING,
     allowNull: false
   },
+  deadline: {
+    type: DataTypes.DATE,
+    allowNull: true
+  },
+  budget: {
+    type: DataTypes.DECIMAL(15, 2),
+    allowNull: true
+  },
   status: {
     type: DataTypes.ENUM('DRAFT', 'PUBLISHED', 'CLOSED'),
     defaultValue: 'DRAFT'
