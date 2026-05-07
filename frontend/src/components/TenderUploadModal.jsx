@@ -6,6 +6,8 @@ const TenderUploadModal = ({ onClose, onSuccess }) => {
     title: '',
     description: '',
     referenceNumber: '',
+    deadline: '',
+    budget: '',
   });
   const [file, setFile] = useState(null);
   const [uploading, setUploading] = useState(false);
@@ -31,6 +33,8 @@ const TenderUploadModal = ({ onClose, onSuccess }) => {
     data.append('title', formData.title);
     data.append('description', formData.description);
     data.append('referenceNumber', formData.referenceNumber);
+    data.append('deadline', formData.deadline);
+    data.append('budget', formData.budget);
     data.append('officerId', officerId);
     data.append('tenderFile', file);
 
@@ -85,10 +89,33 @@ const TenderUploadModal = ({ onClose, onSuccess }) => {
             <input
               type="text"
               value={formData.referenceNumber}
-              onChange={(e) => setFormData({ ...formData, referenceNumber: e.target.value })}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-crpf-dark focus:border-transparent transition-all outline-none"
               placeholder="TENDER/CRPF/2024/001"
             />
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Deadline*</label>
+              <input
+                type="date"
+                required
+                value={formData.deadline}
+                onChange={(e) => setFormData({ ...formData, deadline: e.target.value })}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-crpf-dark focus:border-transparent transition-all outline-none"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Budget (₹)*</label>
+              <input
+                type="number"
+                required
+                value={formData.budget}
+                onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-crpf-dark focus:border-transparent transition-all outline-none"
+                placeholder="Budget in Cr"
+              />
+            </div>
           </div>
 
           <div>

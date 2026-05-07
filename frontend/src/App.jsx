@@ -5,6 +5,8 @@ import Register from './pages/Register';
 import OfficerDashboard from './pages/OfficerDashboard';
 import BidderDashboard from './pages/BidderDashboard';
 import TenderDetail from './pages/TenderDetail';
+import BidEvaluation from './pages/BidEvaluation';
+import BidDetails from './pages/BidDetails';
 import './App.css';
 
 function App() {
@@ -17,7 +19,10 @@ function App() {
         {/* Dashboard Routes */}
         <Route path="/dashboard/officer" element={<OfficerDashboard />} />
         <Route path="/dashboard/bidder" element={<BidderDashboard />} />
+        <Route path="/bidder-dashboard" element={<BidderDashboard />} />
         <Route path="/tender/:id" element={<TenderDetail />} />
+        <Route path="/tender/:id/bids" element={<BidEvaluation />} />
+        <Route path="/bid/:id" element={<BidDetails />} />
         
         {/* Default route redirects to login */}
         <Route path="/" element={<Navigate to="/login" replace />} />

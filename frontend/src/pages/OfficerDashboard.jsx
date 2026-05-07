@@ -112,17 +112,34 @@ const OfficerDashboard = () => {
                   <p className="text-gray-500 text-sm line-clamp-2 mb-4">
                     {tender.description || 'No description provided.'}
                   </p>
-                  <div className="pt-4 border-t border-gray-50 flex justify-between items-center">
-                    <div className="flex -space-x-2">
-                      <div className="w-8 h-8 rounded-full bg-blue-100 border-2 border-white flex items-center justify-center text-[10px] font-bold text-blue-600">AI</div>
-                      <div className="w-8 h-8 rounded-full bg-purple-100 border-2 border-white flex items-center justify-center text-[10px] font-bold text-purple-600">PDF</div>
+                  <div className="pt-4 border-t border-gray-50 flex flex-col space-y-3">
+                    <div className="flex justify-between items-center">
+                      <div className="flex -space-x-2">
+                        <div className="w-8 h-8 rounded-full bg-blue-100 border-2 border-white flex items-center justify-center text-[10px] font-bold text-blue-600 shadow-sm">AI</div>
+                        <div className="w-8 h-8 rounded-full bg-purple-100 border-2 border-white flex items-center justify-center text-[10px] font-bold text-purple-600 shadow-sm">PDF</div>
+                      </div>
+                      <span className="text-xs font-medium text-crpf-dark flex items-center group-hover:translate-x-1 transition-transform duration-200">
+                        View Specs
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                        </svg>
+                      </span>
                     </div>
-                    <span className="text-xs font-medium text-crpf-dark flex items-center group-hover:translate-x-1 transition-transform duration-200">
-                      View Details
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
-                        <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
-                      </svg>
-                    </span>
+                    
+                    {tender.status === 'PUBLISHED' && (
+                      <button 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigate(`/tender/${tender.id}/bids`);
+                        }}
+                        className="w-full bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold py-2 rounded-lg shadow-sm transition-all flex items-center justify-center"
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        Evaluate Bids
+                      </button>
+                    )}
                   </div>
                 </div>
               ))}

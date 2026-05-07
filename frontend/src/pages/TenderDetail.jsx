@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import BidSubmissionModal from '../components/BidSubmissionModal';
 
 const TenderDetail = () => {
   const { id } = useParams();
@@ -8,6 +9,7 @@ const TenderDetail = () => {
   const [tender, setTender] = useState(null);
   const [loading, setLoading] = useState(true);
   const [publishing, setPublishing] = useState(false);
+  const [showBidModal, setShowBidModal] = useState(false);
   const user = JSON.parse(localStorage.getItem('user') || '{}');
   const isOfficer = user.role === 'CRPF_OFFICER';
 
@@ -84,12 +86,27 @@ const TenderDetail = () => {
               {publishing ? 'Publishing...' : tender.status === 'PUBLISHED' ? 'Published' : 'Publish Tender'}
             </button>
           ) : (
-            <button className="px-6 py-2 text-sm font-bold text-white bg-blue-600 rounded-lg shadow-md hover:bg-blue-700 transition-all">
+            <button 
+              onClick={() => setShowBidModal(true)}
+              className="px-6 py-2 text-sm font-bold text-white bg-blue-600 rounded-lg shadow-md hover:bg-blue-700 transition-all"
+            >
               Apply Now
             </button>
           )}
         </div>
       </nav>
+
+      {showBidModal && (
+        <BidSubmissionModal 
+          tender={tender} 
+          onClose={() => setShowBidModal(false)} 
+          onSuccess={() => {
+            setShowBidModal(false);
+            alert('Bid submitted successfully! Check your dashboard for status.');
+            navigate('/bidder-dashboard');
+          }} 
+        />
+      )}
 
       <div className="max-w-6xl mx-auto mt-8 px-6 grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Left Column: Summary & Info */}
@@ -115,6 +132,18 @@ const TenderDetail = () => {
                 <label className="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Uploaded On</label>
                 <p className="text-sm font-semibold text-gray-700 mt-1">
                   {new Date(tender.createdAt).toLocaleDateString(undefined, { dateStyle: 'long' })}
+                </p>
+              </div>
+              <div>
+                <label className="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Deadline</label>
+                <p className={`text-sm font-bold mt-1 ${new Date() > new Date(tender.deadline) ? 'text-red-600' : 'text-blue-600'}`}>
+                  {tender.deadline ? new Date(tender.deadline).toLocaleDateString(undefined, { dateStyle: 'long' }) : 'No deadline'}
+                </p>
+              </div>
+              <div>
+                <label className="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Budget Estimate</label>
+                <p className="text-sm font-bold text-green-600 mt-1">
+                  {tender.budget ? `₹${tender.budget} Cr` : 'N/A'}
                 </p>
               </div>
               <div>
@@ -185,7 +214,7 @@ const TenderDetail = () => {
             <div className="bg-purple-50 px-6 py-4 border-b border-purple-100 flex items-center">
               <div className="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center text-white mr-3">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04currA12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.042A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                 </svg>
               </div>
               <h3 className="font-bold text-purple-900">Statutory Compliance</h3>
