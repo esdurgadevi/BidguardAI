@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-gray-50 text-gray-900;
+  }
+}
+
+/* Custom CRPF Style Components */
+.btn-primary {
+  @apply bg-crpf-dark text-white px-4 py-2 rounded-md hover:bg-opacity-90 transition-all flex items-center justify-center gap-2;
+}
+
+.input-field {
+  @apply block w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-crpf-dark focus:border-transparent outline-none transition-all bg-white;
+}
+
+.glass-card {
+  @apply bg-white bg-opacity-80 backdrop-blur-md border border-white border-opacity-20 shadow-xl rounded-2xl p-8;
+}
